@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Stream Radio</string>
+    <string name="welcome_big">Hello!</string>
+    <string name="welcome_small">I am a Stream Radio.</string>
+    <string name="delete_dialog_title">Delete Radio</string>
+    <string name="delete_dialog_message">Do you want delete this station?</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_delete">Delete</string>
+    <string name="connection_error_dialog_title">Connection Error</string>
+    <string name="connection_error_dialog_message">No Internet connection. Please check your connection and try again.</string>
+    <string name="connection_error_dialog_button">Retry</string>
+    <string name="admob_id">ca-app-pub-6724609620092206/8406682772</string>
+    <string name="admob_true_or_false">true</string>
+
+</resources>

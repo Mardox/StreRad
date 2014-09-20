@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="125"
+            android:background="@drawable/first_dialog">
+
+            <TextView
+                android:id="@+id/dialogTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/delete_dialog_title"
+                android:textColor="#ffa249a3"
+                android:textIsSelectable="false"
+                android:textSize="@dimen/dialog_title" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="88"
+            android:background="#fffdfdfe"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/dialogQuestion"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="86"
+                android:background="#fffdfdfe"
+                android:gravity="center_horizontal"
+                android:text="@string/delete_dialog_message"
+                android:textColor="#FFAAAAAA"
+                android:textSize="@dimen/dialog_text" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="2"
+                android:background="#ffdfdfdf"
+                android:orientation="vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="96"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="152.5"
+                android:background="@drawable/left_btn_dialog"
+                android:text="@string/dialog_cancel"
+                android:textColor="#FFAAAAAA"
+                android:textSize="@dimen/dialog_text" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="#ffdfdfdf"
+                android:orientation="vertical" />
+
+            <Button
+                android:id="@+id/confirm"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="152.5"
+                android:background="@drawable/right_btn_dialog"
+                android:text="@string/dialog_delete"
+                android:textColor="#FFAAAAAA"
+                android:textSize="@dimen/dialog_text" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

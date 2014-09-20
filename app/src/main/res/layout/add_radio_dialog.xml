@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="125"
+            android:background="@drawable/first_dialog">
+
+            <TextView
+                android:id="@+id/dialogTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Add Radio"
+                android:textColor="#ffa249a3"
+                android:textIsSelectable="false"
+                android:textSize="@dimen/dialog_title" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="90"
+            android:background="#fffdfdfe"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="2"
+                android:background="#ffdfdfdf"
+                android:orientation="vertical" />
+
+            <EditText
+                android:id="@+id/dialogradioListName"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="86"
+                android:background="#fffdfdfe"
+                android:hint="Name"
+                android:inputType="textUri"
+                android:singleLine="true"
+                android:textColor="#FFAAAAAA"
+                android:textColorHint="#FFAAAAAA"
+                android:textSize="@dimen/dialog_text"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="2"
+                android:background="#ffdfdfdf"
+                android:orientation="vertical" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="88"
+            android:orientation="vertical"
+            android:id="@+id/urlError"
+            android:background="#fffdfdfe">
+
+            <EditText
+                android:id="@+id/dialogRadioUrl"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="86"
+                android:background="#fffdfdfe"
+                android:hint="URL"
+                android:inputType="textUri"
+                android:singleLine="true"
+                android:textColor="#FFAAAAAA"
+                android:textColorHint="#FFAAAAAA"
+                android:textSize="@dimen/dialog_text" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="2"
+                android:background="#ffdfdfdf"
+                android:orientation="vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="96"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="152.5"
+                android:background="@drawable/left_btn_dialog"
+                android:text="Cancel"
+                android:textColor="#FFAAAAAA"
+                android:textSize="@dimen/dialog_text" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="#ffdfdfdf"
+                android:orientation="vertical" />
+
+            <Button
+                android:id="@+id/confirm"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="152.5"
+                android:background="@drawable/right_btn_dialog"
+                android:text="Confirm"
+                android:textColor="#FFAAAAAA"
+                android:textSize="@dimen/dialog_text" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
