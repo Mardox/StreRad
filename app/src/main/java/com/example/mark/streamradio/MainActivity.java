@@ -26,16 +26,19 @@ import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mark.streamradio.TabPagesAndAdapter.MainScreen;
 import com.example.mark.streamradio.TabPagesAndAdapter.TabPagerAdapter;
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import java.io.BufferedReader;
@@ -100,6 +103,10 @@ public class MainActivity extends FragmentActivity {
         viewPager.setCurrentItem(1, true);
     }
 
+    NewsItemsData newsItemsData;
+    ListView newsListView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +118,28 @@ public class MainActivity extends FragmentActivity {
         //radioTitle = (TextView) findViewById(R.id.radioTitle);
         //radioTitle.setTypeface(fontRegular);
 
+        //News Paper Section
 
+        newsListView = (ListView) findViewById(R.id.news_list);
+
+
+        newsItemsData = new NewsItemsData();
+
+        ArrayAdapter<String> newsAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, newsItemsData.titles);
+        newsListView.setAdapter(newsAdapter);
+        newsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+                String itemValue = (String) newsListView.getItemAtPosition(position);
+
+                // Show Alert
+                Toast.makeText(getApplicationContext(),
+                        "Position :" + position + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
+                        .show();
+            }
+        });
 
 
         TabPagerAdapter tabPageAdapter = new TabPagerAdapter(getSupportFragmentManager());
@@ -130,14 +158,16 @@ public class MainActivity extends FragmentActivity {
                     //radioTitle.setTextColor(Color.parseColor("#ffee9d53"));
                     //plus.setImageResource(R.drawable.exit);
                     //screenChaneButton.setImageResource(R.drawable.switch_page);
-                    adView.setVisibility(View.INVISIBLE);
-                } else {
+                    //adView.setVisibility(View.INVISIBLE);
+                } else if (viewPager.getCurrentItem() == 1) {
                     //radioTitle.setText("All Stations");
                     //radioTitle.setTextColor(Color.parseColor("#ffe51998"));
                     //plus.setImageResource(R.drawable.plus);
                     //screenChaneButton.setImageResource(R.drawable.back);
-                    if(Boolean.parseBoolean(getResources().getString(R.string.admob_true_or_false)))
-                        adView.setVisibility(View.VISIBLE);
+                    //if(Boolean.parseBoolean(getResources().getString(R.string.admob_true_or_false)))
+                    //    adView.setVisibility(View.VISIBLE);
+                } else if (viewPager.getCurrentItem() == 2) {
+
                 }
             }
 
@@ -154,6 +184,7 @@ public class MainActivity extends FragmentActivity {
 //                else viewPager.setCurrentItem(0, true);
 //            }
 //        });
+
         speaker = (ImageView) findViewById(R.id.speaker);
         speaker.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -182,10 +213,10 @@ public class MainActivity extends FragmentActivity {
         startOrStopBtn = (ImageView) findViewById(R.id.start_or_stop_btn);
 
 
-        adView = (AdView) this.findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
-        adView.setVisibility(View.INVISIBLE);
+//        adView = (AdView) this.findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        adView.loadAd(adRequest);
+//        adView.setVisibility(View.INVISIBLE);
     }
 
     @Override

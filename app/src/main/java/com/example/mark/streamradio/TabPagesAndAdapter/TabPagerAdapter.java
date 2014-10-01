@@ -6,7 +6,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 public class TabPagerAdapter extends FragmentStatePagerAdapter {
     MainScreen mainScreen = new MainScreen();
-    RadiosScreen radioStreen = new RadiosScreen();
+    RadiosScreen radioScreen = new RadiosScreen();
+    NewsScreen newsScreen = new NewsScreen();
 
     public TabPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -19,7 +20,9 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return mainScreen;
             case 1:
-                return radioStreen;
+                return radioScreen;
+            case 2:
+                return newsScreen;
         }
         return null;
     }
@@ -27,6 +30,6 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
-        return 2; //No of Tabs
+        return 3; //No of Tabs
     }
 }
