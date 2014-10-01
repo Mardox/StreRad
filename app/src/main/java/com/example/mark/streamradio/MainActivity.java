@@ -56,7 +56,7 @@ public class MainActivity extends FragmentActivity {
     private static LoadingAnimation bufferingAnimation;
     private static AudioManager audioManager;
     private static TextView radioListLocation, radioListName, radioTitle;
-    private ImageView screenChaneButton, plus;
+    //private ImageView screenChaneButton, plus;
     private boolean runOnce = true;
     private LinearLayout volumeLayout, volumeButton;
     private int volumeStore;
@@ -103,8 +103,7 @@ public class MainActivity extends FragmentActivity {
         viewPager.setCurrentItem(1, true);
     }
 
-    NewsItemsData newsItemsData;
-    ListView newsListView;
+
 
 
     @Override
@@ -118,28 +117,7 @@ public class MainActivity extends FragmentActivity {
         //radioTitle = (TextView) findViewById(R.id.radioTitle);
         //radioTitle.setTypeface(fontRegular);
 
-        //News Paper Section
 
-        newsListView = (ListView) findViewById(R.id.news_list);
-
-
-        newsItemsData = new NewsItemsData();
-
-        ArrayAdapter<String> newsAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, newsItemsData.titles);
-        newsListView.setAdapter(newsAdapter);
-        newsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-
-                String itemValue = (String) newsListView.getItemAtPosition(position);
-
-                // Show Alert
-                Toast.makeText(getApplicationContext(),
-                        "Position :" + position + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
-                        .show();
-            }
-        });
 
 
         TabPagerAdapter tabPageAdapter = new TabPagerAdapter(getSupportFragmentManager());
@@ -287,7 +265,7 @@ public class MainActivity extends FragmentActivity {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 float max = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
                 float endPoint = volumeLayout.getWidth() - volumeButton.getWidth();
-                volumeButton.setX(motionEvent.getX()-volumeButton.getWidth()/2);
+                volumeButton.setX(motionEvent.getX() - volumeButton.getWidth() / 2);
 
                 if (volumeButton.getX() >= 0) {
                     float pos = volumeButton.getX() / (endPoint / max);
@@ -300,8 +278,7 @@ public class MainActivity extends FragmentActivity {
                     volumeButton.setX(0);
                     audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
                     speaker.setImageResource(R.drawable.volume_muted);
-                }
-                else speaker.setImageResource(R.drawable.volume_on);
+                } else speaker.setImageResource(R.drawable.volume_on);
                 return true;
             }
         });
@@ -313,12 +290,11 @@ public class MainActivity extends FragmentActivity {
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         if (netInfo != null && netInfo.isConnectedOrConnecting()) {
             return true;
-        }
-        else return false;
+        } else return false;
     }
 
-    public void connectionDialog(boolean isOnline){
-        if(!isOnline){
+    public void connectionDialog(boolean isOnline) {
+        if (!isOnline) {
             final Dialog dialog = new Dialog(MainActivity.this);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setContentView(R.layout.without_internet);
@@ -329,23 +305,23 @@ public class MainActivity extends FragmentActivity {
             retryBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(!isOnline()){
+                    if (!isOnline()) {
                         dialog.dismiss();
                         dialog.show();
-                    }else dialog.dismiss();
+                    } else dialog.dismiss();
                 }
             });
             dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialogInterface) {
-                    if(!isOnline()){
+                    if (!isOnline()) {
                         dialog.dismiss();
                         dialog.show();
                     }
                 }
             });
             dialog.show();
-    }
+        }
     }
 
     public class FileToUrl extends AsyncTask<String, String, String> {
@@ -370,7 +346,7 @@ public class MainActivity extends FragmentActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            System.out.println("ERED: "+radioURL);
+            System.out.println("ERED: " + radioURL);
             return radioURL;
         }
     }
