@@ -18,8 +18,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -29,16 +27,16 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import com.google.android.gms.ads.*;
 
 import com.example.mark.streamradio.TabPagesAndAdapter.MainScreen;
 import com.example.mark.streamradio.TabPagesAndAdapter.TabPagerAdapter;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -110,114 +108,10 @@ public class MainActivity extends FragmentActivity {
 
         dataManager = new DataManager(this, "user_radio");
         fontRegular = Typeface.createFromAsset(getAssets(), "fonts/font.otf");
-        radioTitle = (TextView) findViewById(R.id.radioTitle);
-        radioTitle.setTypeface(fontRegular);
+        //radioTitle = (TextView) findViewById(R.id.radioTitle);
+        //radioTitle.setTypeface(fontRegular);
 
-        plus = (ImageView) findViewById(R.id.plus);
-        plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(viewPager.getCurrentItem()==1){
-                    final Dialog dialog = new Dialog(MainActivity.this);
-                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.setContentView(R.layout.add_radio_dialog);
-                    FrameLayout mainLayout = (FrameLayout) findViewById(R.id.mainLayout);
-                    dialog.getWindow().setLayout((int) (mainLayout.getWidth() * 0.8), (int) (mainLayout.getHeight() * 0.4));
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                    final EditText radioListName = (EditText) dialog.getWindow().findViewById(R.id.dialogradioListName);
-                    final EditText radioUrl = (EditText) dialog.getWindow().findViewById(R.id.dialogRadioUrl);
-                    TextView dialogTitle = (TextView) dialog.getWindow().findViewById(R.id.dialogTitle);
-                    Button confirmBtn = (Button) dialog.getWindow().findViewById(R.id.confirm);
-                    Button cancelBtn = (Button) dialog.getWindow().findViewById(R.id.cancel);
-                    final LinearLayout urlError= (LinearLayout) findViewById(R.id.urlError);
-
-                    dialogTitle.setTypeface(fontRegular);
-                    radioListName.setTypeface(fontRegular);
-                    radioUrl.setTypeface(fontRegular);
-                    confirmBtn.setTypeface(fontRegular);
-                    cancelBtn.setTypeface(fontRegular);
-
-                    radioUrl.addTextChangedListener(new TextWatcher() {
-                        private boolean isInAfterTextChanged;
-                        @Override
-                        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-
-                        }
-
-                        @Override
-                        public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-
-                        }
-
-                        @Override
-                        public void afterTextChanged(Editable editable) {
-                            if (!isInAfterTextChanged) {
-                                isInAfterTextChanged = true;
-                                if(radioUrl.getText().toString().length()==1){
-                                    radioUrl.setText("http://"+editable.toString());
-                                    radioUrl.setSelection(radioUrl.getText().length());
-                                }else if(radioUrl.getText().toString().length()<7){
-                                    radioUrl.setText("http://");
-                                    radioUrl.setSelection(radioUrl.getText().length());
-                                }
-                                else if(!radioUrl.getText().toString().contains("http://")){
-                                    radioUrl.setText("http://"+editable.toString());
-                                    radioUrl.setSelection(radioUrl.getText().length());
-                                }else if(radioUrl.getText().toString().contains("http://")){
-                                    String split[]=radioUrl.getText().toString().split("http://");
-                                    if(split.length>2){
-                                        radioUrl.setText("http://"+radioUrl.getText().toString().replace("http://", ""));
-                                        radioUrl.setSelection(radioUrl.getText().length());
-                                    }
-                                }
-                                if(radioUrl.getCurrentTextColor()==Color.RED){
-                                    radioUrl.setTextColor(Color.parseColor("#FFAAAAAA"));
-                                }
-                                isInAfterTextChanged = false;
-                            }
-                        }
-                    });
-
-                    confirmBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if (radioListName.getText().length() != 0 && radioUrl.getText().length() != 0) {
-                                if(radioUrl.getText().toString().endsWith(".pls") || radioUrl.getText().toString().endsWith(".m3u")){
-                                    try {
-                                        String url=new FileToUrl().execute(radioUrl.getText().toString()).get();
-                                        if(url.toString()=="empty")
-                                            radioUrl.setTextColor(Color.RED);
-                                        else{
-                                            dataManager.addNewRadio(radioListName.getText().toString(), "Own station", url);
-                                            radioListRefresh();
-                                            dialog.dismiss();
-                                        }
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-                                }else if(radioUrl.getText().toString().endsWith(".asx"))
-                                    radioUrl.setTextColor(Color.RED);
-                                else{
-                                    dataManager.addNewRadio(radioListName.getText().toString(), "Own station", radioUrl.getText().toString());
-                                    radioListRefresh();
-                                    dialog.dismiss();
-                                }
-                            }
-                        }
-                    });
-
-                    cancelBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            dialog.dismiss();
-                        }
-                    });
-                    dialog.show();
-                }
-                else System.exit(0);
-            }
-        });
 
 
         TabPagerAdapter tabPageAdapter = new TabPagerAdapter(getSupportFragmentManager());
@@ -232,16 +126,16 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onPageSelected(int i) {
                 if (viewPager.getCurrentItem() == 0) {
-                    radioTitle.setText("Stream Radio");
-                    radioTitle.setTextColor(Color.parseColor("#ffee9d53"));
-                    plus.setImageResource(R.drawable.exit);
-                    screenChaneButton.setImageResource(R.drawable.switch_page);
+                    //radioTitle.setText("Stream Radio");
+                    //radioTitle.setTextColor(Color.parseColor("#ffee9d53"));
+                    //plus.setImageResource(R.drawable.exit);
+                    //screenChaneButton.setImageResource(R.drawable.switch_page);
                     adView.setVisibility(View.INVISIBLE);
                 } else {
-                    radioTitle.setText("All Stations");
-                    radioTitle.setTextColor(Color.parseColor("#ffe51998"));
-                    plus.setImageResource(R.drawable.plus);
-                    screenChaneButton.setImageResource(R.drawable.back);
+                    //radioTitle.setText("All Stations");
+                    //radioTitle.setTextColor(Color.parseColor("#ffe51998"));
+                    //plus.setImageResource(R.drawable.plus);
+                    //screenChaneButton.setImageResource(R.drawable.back);
                     if(Boolean.parseBoolean(getResources().getString(R.string.admob_true_or_false)))
                         adView.setVisibility(View.VISIBLE);
                 }
@@ -252,14 +146,14 @@ public class MainActivity extends FragmentActivity {
             }
         });
 
-        screenChaneButton = (ImageView) findViewById(R.id.nextScreen);
-        screenChaneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (viewPager.getCurrentItem() == 0) viewPager.setCurrentItem(1, true);
-                else viewPager.setCurrentItem(0, true);
-            }
-        });
+//        screenChaneButton = (ImageView) findViewById(R.id.nextScreen);
+//        screenChaneButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (viewPager.getCurrentItem() == 0) viewPager.setCurrentItem(1, true);
+//                else viewPager.setCurrentItem(0, true);
+//            }
+//        });
         speaker = (ImageView) findViewById(R.id.speaker);
         speaker.setOnTouchListener(new View.OnTouchListener() {
             @Override

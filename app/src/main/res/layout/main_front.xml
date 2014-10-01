@@ -6,103 +6,44 @@
     android:background="@drawable/first_part_new"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/radioTitle"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="270"
-        android:gravity="center"
-        android:text="@string/app_name"
-        android:textColor="#ffee9d53"
-        android:textSize="@dimen/radio_title" />
-
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="0px"
-            android:layout_height="fill_parent"
-            android:layout_weight="209"
-            android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/now_playing_icon"
+            android:src="@drawable/nowplaying"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            />
 
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="fill_parent"
-                android:layout_weight="61"
-                android:orientation="vertical"/>
-
-            <RelativeLayout
-                android:layout_width="0px"
-                android:layout_height="fill_parent"
-                android:layout_weight="60"
-                android:alpha="0.4">
-
-                <ImageView
-                    android:id="@+id/nextScreen"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:src="@drawable/switch_page" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="fill_parent"
-                android:layout_weight="100"
-                android:orientation="vertical"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="0px"
-            android:layout_height="fill_parent"
-            android:layout_weight="270"
-            android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/radio_icon"
+            android:src="@drawable/radio"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            />
+        <ImageView
+            android:id="@+id/news_icon"
+            android:src="@drawable/news"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            />
+        <ImageView
+            android:id="@+id/more_icon"
+            android:src="@drawable/more"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            />
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0px"
-            android:layout_height="fill_parent"
-            android:layout_weight="208"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="fill_parent"
-                android:layout_weight="111"
-                android:orientation="vertical" />
-
-            <RelativeLayout
-                android:layout_width="0px"
-                android:layout_height="fill_parent"
-                android:layout_weight="60"
-
-                android:alpha="0.4">
-
-                <ImageView
-                    android:id="@+id/plus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:clickable="false"
-                    android:focusableInTouchMode="false"
-                    android:visibility="visible"
-                    android:src="@drawable/exit" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="fill_parent"
-                android:layout_weight="61"
-                android:orientation="vertical" />
-        </LinearLayout>
-    </LinearLayout>
 
 </FrameLayout>
