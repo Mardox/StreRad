@@ -14,7 +14,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.telephony.PhoneStateListener;
@@ -167,24 +166,7 @@ public class MainActivity extends FragmentActivity {
 
             @Override
             public void onPageSelected(int i) {
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        switch (viewPager.getCurrentItem()){
-                            case 0:
-                                AlterVisibility(View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
-                                break;
-                            case 1:
-                                AlterVisibility(View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
-                                break;
-                            case 2:
-                                AlterVisibility(View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
-                                break;
-                        }
-                    }
-                });
-
-
+                new HeavyTask().execute();
             }
 
             @Override
@@ -395,6 +377,31 @@ public class MainActivity extends FragmentActivity {
             }
             System.out.println("ERED: " + radioURL);
             return radioURL;
+        }
+    }
+
+    public class HeavyTask extends AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void voids) {
+            super.onPostExecute(voids);
+            // do something with data here-display it or send to mainactivity
+            switch (viewPager.getCurrentItem()){
+                case 0:
+                    AlterVisibility(View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                    break;
+                case 1:
+                    AlterVisibility(View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
+                    break;
+                case 2:
+                    AlterVisibility(View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+                    break;
+            }
         }
     }
 }
