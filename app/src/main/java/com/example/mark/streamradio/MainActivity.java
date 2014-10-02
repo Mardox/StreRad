@@ -14,6 +14,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.telephony.PhoneStateListener;
@@ -161,32 +162,34 @@ public class MainActivity extends FragmentActivity {
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i2) {
+
             }
 
             @Override
             public void onPageSelected(int i) {
-                if (viewPager.getCurrentItem() == 0) {
-                    //radioTitle.setText("Stream Radio");
-                    //radioTitle.setTextColor(Color.parseColor("#ffee9d53"));
-                    //plus.setImageResource(R.drawable.exit);
-                    //screenChaneButton.setImageResource(R.drawable.switch_page);
-                    //adView.setVisibility(View.INVISIBLE);
-                    AlterVisibility(View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
-                } else if (viewPager.getCurrentItem() == 1) {
-                    AlterVisibility(View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
-                    //radioTitle.setText("All Stations");
-                    //radioTitle.setTextColor(Color.parseColor("#ffe51998"));
-                    //plus.setImageResource(R.drawable.plus);
-                    //screenChaneButton.setImageResource(R.drawable.back);
-                    //if(Boolean.parseBoolean(getResources().getString(R.string.admob_true_or_false)))
-                    //    adView.setVisibility(View.VISIBLE);
-                } else if (viewPager.getCurrentItem() == 2) {
-                    AlterVisibility(View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
-                }
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch (viewPager.getCurrentItem()){
+                            case 0:
+                                AlterVisibility(View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                                break;
+                            case 1:
+                                AlterVisibility(View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
+                                break;
+                            case 2:
+                                AlterVisibility(View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+                                break;
+                        }
+                    }
+                });
+
+
             }
 
             @Override
             public void onPageScrollStateChanged(int i) {
+
             }
         });
 
@@ -232,6 +235,7 @@ public class MainActivity extends FragmentActivity {
 //        adView.loadAd(adRequest);
 //        adView.setVisibility(View.INVISIBLE);
     }
+
 
     private void AlterVisibility(int V1, int V2, int V3, int V4){
         bottom0.setVisibility(V1);
