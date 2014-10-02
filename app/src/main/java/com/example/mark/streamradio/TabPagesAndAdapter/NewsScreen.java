@@ -1,5 +1,6 @@
 package com.example.mark.streamradio.TabPagesAndAdapter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
+import com.example.mark.streamradio.NewsDetailActivity;
 import com.example.mark.streamradio.NewsItemsData;
 import com.example.mark.streamradio.R;
 
@@ -34,7 +35,7 @@ public class NewsScreen extends Fragment {
         newsItemsData = new NewsItemsData();
 
         ArrayAdapter<String> newsAdapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, newsItemsData.titles);
+                R.layout.news_list_item, R.id.newsListName, newsItemsData.titles);
 
         newsListView.setAdapter(newsAdapter);
         newsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -44,9 +45,13 @@ public class NewsScreen extends Fragment {
                 String itemValue = (String) newsListView.getItemAtPosition(position);
 
                 // Show Alert
-                Toast.makeText(getActivity(),
-                        "Position :" + position + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
-                        .show();
+                //Toast.makeText(getActivity(),
+                //        "Position :" + position + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
+                //        .show();
+
+                Intent intent = new Intent(getActivity(), NewsDetailActivity.class);
+                intent.putExtra("id", position);
+                startActivity(intent);
             }
         });
         return rootView;

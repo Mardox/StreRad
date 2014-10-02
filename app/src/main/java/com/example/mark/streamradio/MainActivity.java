@@ -26,16 +26,12 @@ import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mark.streamradio.TabPagesAndAdapter.MainScreen;
 import com.example.mark.streamradio.TabPagesAndAdapter.TabPagerAdapter;
@@ -52,7 +48,7 @@ public class MainActivity extends FragmentActivity {
     private static TableLayout UIRadioList;
     private static ArrayList<String> userRadios = new ArrayList<String>();
     private static ViewPager viewPager;
-    private static ImageView bufferingIndicator, speaker, startOrStopBtn;
+    private static ImageView bufferingIndicator, speaker, startOrStopBtn, now_playing_icon, radio_icon, news_icon, more_icon, bottom0, bottom1, bottom2, bottom3;
     private static LoadingAnimation bufferingAnimation;
     private static AudioManager audioManager;
     private static TextView radioListLocation, radioListName, radioTitle;
@@ -117,6 +113,44 @@ public class MainActivity extends FragmentActivity {
         //radioTitle = (TextView) findViewById(R.id.radioTitle);
         //radioTitle.setTypeface(fontRegular);
 
+        bottom0 = (ImageView) findViewById(R.id.now_playing_icon_bottom);
+        bottom1 = (ImageView) findViewById(R.id.radio_icon_bottom);
+        bottom2 = (ImageView) findViewById(R.id.news_icon_bottom);
+        bottom3 = (ImageView) findViewById(R.id.more_icon_bottom);
+
+        now_playing_icon = (ImageView) findViewById(R.id.now_playing_icon);
+        AlterVisibility(View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+        now_playing_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewPager.setCurrentItem(0);
+                AlterVisibility(View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+            }
+        });
+        radio_icon = (ImageView) findViewById(R.id.radio_icon);
+        radio_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewPager.setCurrentItem(1);
+                AlterVisibility(View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
+            }
+        });
+        news_icon = (ImageView) findViewById(R.id.news_icon);
+        news_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewPager.setCurrentItem(2);
+                AlterVisibility(View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+            }
+        });
+        more_icon = (ImageView) findViewById(R.id.more_icon);
+        more_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //viewPager.setCurrentItem(3);
+                AlterVisibility(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
+            }
+        });
 
 
 
@@ -137,7 +171,9 @@ public class MainActivity extends FragmentActivity {
                     //plus.setImageResource(R.drawable.exit);
                     //screenChaneButton.setImageResource(R.drawable.switch_page);
                     //adView.setVisibility(View.INVISIBLE);
+                    AlterVisibility(View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
                 } else if (viewPager.getCurrentItem() == 1) {
+                    AlterVisibility(View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
                     //radioTitle.setText("All Stations");
                     //radioTitle.setTextColor(Color.parseColor("#ffe51998"));
                     //plus.setImageResource(R.drawable.plus);
@@ -145,7 +181,7 @@ public class MainActivity extends FragmentActivity {
                     //if(Boolean.parseBoolean(getResources().getString(R.string.admob_true_or_false)))
                     //    adView.setVisibility(View.VISIBLE);
                 } else if (viewPager.getCurrentItem() == 2) {
-
+                    AlterVisibility(View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
                 }
             }
 
@@ -195,6 +231,13 @@ public class MainActivity extends FragmentActivity {
 //        AdRequest adRequest = new AdRequest.Builder().build();
 //        adView.loadAd(adRequest);
 //        adView.setVisibility(View.INVISIBLE);
+    }
+
+    private void AlterVisibility(int V1, int V2, int V3, int V4){
+        bottom0.setVisibility(V1);
+        bottom1.setVisibility(V2);
+        bottom2.setVisibility(V3);
+        bottom3.setVisibility(V4);
     }
 
     @Override

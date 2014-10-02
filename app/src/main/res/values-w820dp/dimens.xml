@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <dimen name="radio_title">50dp</dimen>
     <dimen name="radio_list_name_and_from">36dp</dimen>
     <dimen name="radio_list_margin">40dp</dimen>
@@ -9,4 +11,6 @@
     <dimen name="radio_main_from">52dp</dimen>
     <dimen name="dialog_title">60dp</dimen>
     <dimen name="dialog_text">40dp</dimen>
+    <dimen name="activity_horizontal_margin">64dp</dimen>
+
 </resources>

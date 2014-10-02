@@ -13,5 +13,10 @@
     <string name="connection_error_dialog_button">Retry</string>
     <string name="admob_id">ca-app-pub-6724609620092206/8406682772</string>
     <string name="admob_true_or_false">true</string>
+    <string name="title_activity_news_detail">News</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_refresh">Refresh</string>
+
+    <color name="background_color">#00CCFF</color>
 
 </resources>

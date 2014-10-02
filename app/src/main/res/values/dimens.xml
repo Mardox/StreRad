@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <dimen name="radio_title">25dp</dimen>
@@ -10,5 +11,7 @@
     <dimen name="radio_main_from">26dp</dimen>
     <dimen name="dialog_title">30dp</dimen>
     <dimen name="dialog_text">20dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
 
 </resources>

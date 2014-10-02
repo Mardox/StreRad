@@ -4,4 +4,7 @@
     <style name="AppTheme" parent="android:Theme.DeviceDefault.NoActionBar">
         <!-- Customize your theme here. -->
     </style>
+    <style name="NewsTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+    </style>
 </resources>
