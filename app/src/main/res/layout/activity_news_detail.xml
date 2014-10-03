@@ -5,12 +5,6 @@
     android:orientation="vertical"
     tools:context="com.example.mark.streamradio.NewsDetailActivity">
 
-    <!--<ProgressBar-->
-        <!--android:id="@+id/browserProgress"-->
-        <!--style="?android:attr/progressBarStyleHorizontal"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:paddingTop="-5dp"/>-->
     <WebView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

@@ -19,4 +19,7 @@
 
     <color name="background_color">#00CCFF</color>
 
+    <string name="title_activity_recordings">My Recordings</string>
+    <string name="action_settings">Settings</string>
+
 </resources>

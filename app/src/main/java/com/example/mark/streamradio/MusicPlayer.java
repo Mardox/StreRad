@@ -29,6 +29,8 @@ public class MusicPlayer {
     }
 
     public void play(RadioListElement rle) {
+        MusicPlayerControl musicPlayerControl = new MusicPlayerControl();
+        musicPlayerControl.setRadioListElement(rle);
         radioListElement=rle;
         musicPlayerTask.cancel(true);
         musicPlayerTask = new MusicPlayerTask();

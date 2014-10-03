@@ -56,7 +56,7 @@ public class MainActivity extends FragmentActivity {
     private boolean runOnce = true;
     private LinearLayout volumeLayout, volumeButton;
     private int volumeStore;
-    private ImageView previousBtn, nextBtn;
+    private ImageView previousBtn, nextBtn, recordBtn;
     private AdView adView;
     private Typeface fontRegular;
 
@@ -107,6 +107,11 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+
+//        MediaRecorder mediaRecorder = new MediaRecorder();
+//        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
+//        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.AAC_ADTS);
+//        mediaRecorder.setOutputFile("Klayan.aac");
 
         dataManager = new DataManager(this, "user_radio");
         fontRegular = Typeface.createFromAsset(getAssets(), "fonts/font.otf");
@@ -210,6 +215,7 @@ public class MainActivity extends FragmentActivity {
         previousBtn = (ImageView) findViewById(R.id.previous_btn);
         nextBtn = (ImageView) findViewById(R.id.next_btn);
         startOrStopBtn = (ImageView) findViewById(R.id.start_or_stop_btn);
+        recordBtn = (ImageView) findViewById(R.id.record_btn);
 
 
 //        adView = (AdView) this.findViewById(R.id.adView);
@@ -241,6 +247,9 @@ public class MainActivity extends FragmentActivity {
             defaultVolumeBarPosition(audioManager, volumeLayout, volumeButton);
         else if (keyCode == KeyEvent.KEYCODE_VOLUME_UP)
             defaultVolumeBarPosition(audioManager, volumeLayout, volumeButton);
+        else if (keyCode == KeyEvent.KEYCODE_BACK) {
+            onBackPressed();
+        }
         return super.onKeyDown(keyCode, event);
     }
 
@@ -255,7 +264,7 @@ public class MainActivity extends FragmentActivity {
             startWallpaperAnimation();
             radioListRefresh();
             volumeBarReaction(volumeLayout, volumeButton, audioManager);
-            new MusicPlayerControl(previousBtn, startOrStopBtn, nextBtn, radioListLocation, radioListName).setOnTouchListeners();
+            new MusicPlayerControl(previousBtn, startOrStopBtn, nextBtn, radioListLocation, radioListName, recordBtn, this).setOnTouchListeners();
             connectionDialog(isOnline());
             runOnce = false;
 

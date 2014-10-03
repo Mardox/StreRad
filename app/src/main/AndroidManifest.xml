@@ -7,6 +7,9 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -36,8 +39,17 @@
         <activity
             android:name="com.example.mark.streamradio.NewsDetailActivity"
             android:label="@string/title_activity_news_detail"
-            android:theme="@style/NewsTheme"
-            android:parentActivityName="com.example.mark.streamradio.MainActivity" >
+            android:parentActivityName="com.example.mark.streamradio.MainActivity"
+            android:theme="@style/NewsTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.mark.streamradio.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.example.mark.streamradio.RecordingsActivity"
+            android:label="@string/title_activity_recordings"
+            android:parentActivityName="com.example.mark.streamradio.MainActivity"
+            android:theme="@style/NewsTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.mark.streamradio.MainActivity" />

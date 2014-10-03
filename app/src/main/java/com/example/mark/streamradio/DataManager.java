@@ -110,6 +110,7 @@ public class DataManager {
     public void createRadioListForRadioScreen(TableLayout UIRadioList,  ArrayList<String> userRadios, TextView radioListName, TextView radioListLocation) {
         ArrayList<RadioListElement> radioArray = new ArrayList<RadioListElement>();
         MainActivity.getDataManager().loadStoredRadioStations(radioArray, userRadios);
+        radioArray.add(new RadioListElement(context, "My Recordings", "", ""));
         radioArray.add(new RadioListElement(context, "DEFJAY Radio", "USA", "http://tuner.defjay.com:80/"));
         radioArray.add(new RadioListElement(context, "Bridge FM", "Bridgend", "http://icy-e-04.sharp-stream.com:80/tcbridge.mp3"));
         radioArray.add(new RadioListElement(context, "Capital FM", "London", "http://ice-the.musicradio.com:80/CapitalMP3"));

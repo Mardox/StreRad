@@ -3,6 +3,7 @@ package com.example.mark.streamradio;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Vibrator;
@@ -58,7 +59,7 @@ public class RadioList extends LinearLayout {
     public static String selectedRadio() {
         for (final RadioListElement rle : radioList) {
             if (rle.isPlayBol())
-                return rle.getName().toString();
+                return rle.getName();
         }
         return null;
     }
@@ -167,22 +168,27 @@ public class RadioList extends LinearLayout {
                 public boolean onTouch(View v, MotionEvent motionEvent) {
                     lastTouchedradioListName = rle.getName();
                     mGestureDetector.onTouchEvent(motionEvent);
-
-                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN && !rle.isPlayBol() && !dialog.isShowing()) {
-                        rle.touchDown();
-                    } else {
-                        if (motionEvent.getAction() == MotionEvent.ACTION_UP && !rle.isPlayBol() && !dialog.isShowing()) {
-                            resetOldSelectedRadio();
-                            rle.touchUP();
-                            mainRadioLocation.setText(rle.getName());
-                            mainRadioName.setText(rle.getFrequency());
-                            try {
-                                mpt.play(rle);
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                    if(rle.getName().equals("My Recordings")) {
+                        Intent intent = new Intent(getContext(), RecordingsActivity.class);
+                        getContext().startActivity(intent);
+                    }
+                    else{
+                        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN && !rle.isPlayBol() && !dialog.isShowing()) {
+                            rle.touchDown();
+                        } else {
+                            if (motionEvent.getAction() == MotionEvent.ACTION_UP && !rle.isPlayBol() && !dialog.isShowing()) {
+                                resetOldSelectedRadio();
+                                rle.touchUP();
+                                mainRadioLocation.setText(rle.getName());
+                                mainRadioName.setText(rle.getFrequency());
+                                try {
+                                    mpt.play(rle);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            } else if (motionEvent.getAction() == MotionEvent.ACTION_CANCEL && !rle.isPlayBol()) {
+                                rle.touchCancel();
                             }
-                        } else if (motionEvent.getAction() == MotionEvent.ACTION_CANCEL && !rle.isPlayBol()) {
-                            rle.touchCancel();
                         }
                     }
                     return true;
