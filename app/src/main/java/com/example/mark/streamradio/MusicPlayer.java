@@ -41,7 +41,7 @@ public class MusicPlayer {
         SharedPreferences sharedpreferences = context.getSharedPreferences("currentRadio", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString("currentRadioUrl", radioListElement.getUrl());
-        editor.apply();
+        editor.commit();
     }
 
     public void startListeners(MediaPlayer mediaPlayer){

@@ -7,7 +7,6 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +33,7 @@ public class MusicPlayerControl {
     private MediaRecorder recorder;
     InputStream inputStream = null;
     FileOutputStream fileOutputStream = null;
+    Dialog dialog;
 
     public MusicPlayerControl(ImageView previous, ImageView stopOrStart, ImageView next, TextView mainRadioName, TextView mainRadioLocation, ImageView record, Context context) {
         this.previous = previous;
@@ -104,11 +104,12 @@ public class MusicPlayerControl {
                     if (mediaPlayer.isPlaying()) {
                         new RecordAudio().execute();
                         // Create custom dialog object
-                        final Dialog dialog = new Dialog(context);
+
+                        dialog = new Dialog(context);
                         // Include dialog.xml file
                         dialog.setContentView(R.layout.record_dialog);
                         // Set dialog title
-                        dialog.setTitle("Recording...");
+                        dialog.setTitle("Please wait...");
 
                         // set values for custom dialog components - text, image and button
                         dialog.show();
@@ -119,6 +120,7 @@ public class MusicPlayerControl {
                             @Override
                             public void onClick(View v) {
                                 // Close dialog
+                                Toast.makeText(context,"Saved",Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                                 if (fileOutputStream != null) {
                                     try {
@@ -145,7 +147,7 @@ public class MusicPlayerControl {
     }
 
 
-    public class RecordAudio extends AsyncTask<Void,Void,Void>{
+    public class RecordAudio extends AsyncTask<Void,Integer,Void>{
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -176,12 +178,11 @@ public class MusicPlayerControl {
                 }
                 URL url = new URL(tempUrl);
                 inputStream = url.openStream();
-
                 fileOutputStream = new FileOutputStream(audiofile,false);
                 int c;
-
                 while ((c = inputStream.read()) != -1) {
                     fileOutputStream.write(c);
+                    publishProgress(c);
                 }
 
             }catch (Exception e){
@@ -190,45 +191,10 @@ public class MusicPlayerControl {
             }
             return null;
         }
-    }
 
-    void Record(){
-        String dateInString = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date());
-        String fileName = "StreamRadio_" + dateInString + " record.3gp";
-
-        String SDCardpath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/My Recordings";
-
-        File myDataPath = new File(SDCardpath);
-
-        // mydir = context.getDir("media", Context.MODE_PRIVATE);
-        if (!myDataPath.exists()) {
-            myDataPath.mkdir();
-        }
-
-
-        File audiofile = new File(myDataPath + "/" + fileName);
-
-        Log.d("path", myDataPath.getAbsolutePath());
-        // File fileWithinMyDir = new File(mydir, fileName);
-        // audiofile = fileWithinMyDir;
-        // FileOutputStream out = new FileOutputStream(fileWithinMyDir);
-
-
-        recorder = new MediaRecorder();
-        recorder.reset();
-        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-        recorder.setAudioEncodingBitRate(16);
-        recorder.setAudioSamplingRate(44100);
-
-        recorder.setOutputFile(audiofile.getAbsolutePath());
-
-        try {
-            recorder.prepare();
-            recorder.start();
-        } catch (IOException e) {
-            e.printStackTrace();
+        @Override
+        protected void onProgressUpdate(Integer... progUpdate) {
+            dialog.setTitle("Recording...");
         }
     }
 }

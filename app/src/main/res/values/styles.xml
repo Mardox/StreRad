@@ -1,21 +1,39 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.DeviceDefault.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
     </style>
-    <style name="NewsTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!--<style name="NewsTheme" parent="Theme.AppCompat.Light">-->
+    <!--</style>-->
 
-    </style>
+    <!--&lt;!&ndash; the theme applied to the application or activity &ndash;&gt;-->
+    <!--<style name="CustomActionBarTheme"-->
+        <!--parent="Theme.AppCompat.Light">-->
+        <!--&lt;!&ndash;<item name="android:actionBarStyle">@style/MyActionBar</item>&ndash;&gt;-->
+        <!--&lt;!&ndash;<item name="android:actionBarTabTextStyle">@style/MyActionBarTabText</item>&ndash;&gt;-->
+        <!--&lt;!&ndash;<item name="android:actionOverflowButtonStyle">@style/OverFlowButton</item>&ndash;&gt;-->
+    <!--</style>-->
 
-    <style name="CustomActionBarTheme"
-        parent="@android:style/Theme.Holo.Light.DarkActionBar">
-        <item name="android:actionBarStyle">@style/MyActionBar</item>
-    </style>
+    <!--<style name="OverFlowButton" parent="android:Widget.Holo.Light.ActionButton.Overflow">-->
+        <!--<item name="android:dropDownAnchor">@color/actionbar_text</item>-->
+    <!--</style>-->
 
-    <!-- ActionBar styles -->
-    <style name="MyActionBar"
-        parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/action_bar_color</item>
-    </style>
+    <!--&lt;!&ndash; ActionBar styles &ndash;&gt;-->
+    <!--<style name="MyActionBar"-->
+        <!--parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">-->
+        <!--<item name="android:background">@color/action_bar_color</item>-->
+    <!--</style>-->
+
+    <!--&lt;!&ndash; ActionBar title text &ndash;&gt;-->
+    <!--<style name="MyActionBarTitleText"-->
+        <!--parent="android:TextAppearance.Holo.Widget.ActionBar.Title">-->
+        <!--<item name="android:textColor">@color/actionbar_text</item>-->
+    <!--</style>-->
+
+    <!--&lt;!&ndash; ActionBar tabs text styles &ndash;&gt;-->
+    <!--<style name="MyActionBarTabText"-->
+        <!--parent="android:Widget.Holo.ActionBar.TabText">-->
+        <!--<item name="android:textColor">@color/actionbar_tab_text</item>-->
+    <!--</style>-->
 </resources>

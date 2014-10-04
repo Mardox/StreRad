@@ -22,6 +22,8 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.view.Display;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -191,10 +193,6 @@ public class MainActivity extends FragmentActivity {
                     actionBar.newTab()
                             .setText("News")
                             .setTabListener(tabListener));
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText("More")
-                            .setTabListener(tabListener));
         }
 
 
@@ -242,12 +240,26 @@ public class MainActivity extends FragmentActivity {
 //        adView.setVisibility(View.INVISIBLE);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
 
-    private void AlterVisibility(int V1, int V2, int V3, int V4){
-        bottom0.setVisibility(V1);
-        bottom1.setVisibility(V2);
-        bottom2.setVisibility(V3);
-        bottom3.setVisibility(V4);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_more) {
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -14,7 +14,6 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 
 public class RecordingsActivity extends Activity {
@@ -41,7 +40,7 @@ public class RecordingsActivity extends Activity {
                 recordPathList.add(aList.getAbsolutePath());
             }
 
-            Collections.sort(recordList, Collections.reverseOrder());
+            //Collections.sort(recordList, Collections.reverseOrder());
 
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                     R.layout.news_list_item, R.id.newsListName,
