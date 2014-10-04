@@ -2,6 +2,7 @@ package com.example.mark.streamradio;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.AsyncTask;
@@ -31,11 +32,8 @@ public class MusicPlayerControl {
     private MediaPlayer mediaPlayer;
     private Context context;
     private MediaRecorder recorder;
-    private RadioListElement radioListElement;
     InputStream inputStream = null;
     FileOutputStream fileOutputStream = null;
-
-    public MusicPlayerControl() {}
 
     public MusicPlayerControl(ImageView previous, ImageView stopOrStart, ImageView next, TextView mainRadioName, TextView mainRadioLocation, ImageView record, Context context) {
         this.previous = previous;
@@ -46,10 +44,6 @@ public class MusicPlayerControl {
         this.mediaPlayer = MusicPlayer.getMediaPlayer();
         this.record = record;
         this.context = context;
-    }
-
-    public void setRadioListElement(RadioListElement tempRadioListElement){
-        radioListElement = tempRadioListElement;
     }
 
     public void setOnTouchListeners() {
@@ -126,9 +120,11 @@ public class MusicPlayerControl {
                             public void onClick(View v) {
                                 // Close dialog
                                 dialog.dismiss();
-                                if (inputStream != null || fileOutputStream != null) {
+                                if (fileOutputStream != null) {
                                     try {
-                                        inputStream.close();
+                                        if (inputStream != null) {
+                                            inputStream.close();
+                                        }
                                         fileOutputStream.close();
                                     } catch (IOException e) {
                                         e.printStackTrace();
@@ -170,7 +166,15 @@ public class MusicPlayerControl {
             File audiofile = new File(myDataPath + "/" + fileName);
             try {
                 //URL url = new URL("http://icy-e-04.sharp-stream.com:80/tcbridge.mp3");
-                URL url = new URL(radioListElement.getUrl());
+                String tempUrl;
+                SharedPreferences sharedpreferences = context.getSharedPreferences("currentRadio", Context.MODE_PRIVATE);
+                if (sharedpreferences.contains("currentRadioUrl"))
+                {
+                    tempUrl = sharedpreferences.getString("currentRadioUrl", "");
+                } else {
+                    tempUrl = null;
+                }
+                URL url = new URL(tempUrl);
                 inputStream = url.openStream();
 
                 fileOutputStream = new FileOutputStream(audiofile,false);

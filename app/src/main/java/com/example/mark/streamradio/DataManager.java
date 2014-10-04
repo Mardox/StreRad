@@ -122,7 +122,6 @@ public class DataManager {
         UIRadioList.removeAllViews();
         RadioList radioList = new RadioList(context, radioArray, UIRadioList);
         radioList.addRadioStations(radioListName, radioListLocation);
-
     }
 
 }

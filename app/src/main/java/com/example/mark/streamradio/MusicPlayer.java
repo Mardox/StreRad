@@ -1,6 +1,7 @@
 package com.example.mark.streamradio;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
@@ -29,13 +30,18 @@ public class MusicPlayer {
     }
 
     public void play(RadioListElement rle) {
-        MusicPlayerControl musicPlayerControl = new MusicPlayerControl();
-        musicPlayerControl.setRadioListElement(rle);
+
+
         radioListElement=rle;
         musicPlayerTask.cancel(true);
         musicPlayerTask = new MusicPlayerTask();
         musicPlayerTask.execute(radioListElement.getUrl());
         context=radioListElement.getContext();
+
+        SharedPreferences sharedpreferences = context.getSharedPreferences("currentRadio", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString("currentRadioUrl", radioListElement.getUrl());
+        editor.apply();
     }
 
     public void startListeners(MediaPlayer mediaPlayer){

@@ -1,8 +1,7 @@
 package com.example.mark.streamradio;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
@@ -10,10 +9,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -29,7 +28,9 @@ public class RecordingsActivity extends Activity {
 
         recordingsList = (ListView) findViewById(R.id.recording_list);
 
-        ArrayList<String> recordList = new ArrayList<String>();
+        final ArrayList<String> recordList = new ArrayList<String>();
+        final ArrayList<String> recordPathList = new ArrayList<String>();
+        //String[] recordPathList = null;
         try {
             File directory = Environment.getExternalStorageDirectory();
 
@@ -37,6 +38,7 @@ public class RecordingsActivity extends Activity {
             File list[] = file.listFiles();
             for (File aList : list) {
                 recordList.add(aList.getName());
+                recordPathList.add(aList.getAbsolutePath());
             }
 
             Collections.sort(recordList, Collections.reverseOrder());
@@ -60,16 +62,30 @@ public class RecordingsActivity extends Activity {
                                     long arg3) {
                 // TODO Auto-generated method stub
 
+                MediaPlayer mediaPlayer = new MediaPlayer();
+                String path = recordPathList.get(position);
+                try {
+                    mediaPlayer.setDataSource(path);
+                    mediaPlayer.prepareAsync();
+                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mediaPlayer) {
+                            mediaPlayer.start();
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                String product = ((TextView) view).getText().toString();
-                String fullPathAudio = file.getAbsolutePath() + "/" + product;
-
-                File resultFile = new File(fullPathAudio);
-
-                Intent intent = new Intent();
-                intent.setAction(android.content.Intent.ACTION_VIEW);
-                intent.setDataAndType(Uri.fromFile(resultFile), "audio/*");
-                startActivity(intent);
+//                String product = ((TextView) view).getText().toString();
+//                String fullPathAudio = file.getAbsolutePath() + "/" + product;
+//
+//                File resultFile = new File(fullPathAudio);
+//
+//                Intent intent = new Intent();
+//                intent.setAction(android.content.Intent.ACTION_VIEW);
+//                intent.setDataAndType(Uri.fromFile(resultFile), "audio/*");
+//                startActivity(intent);
             }
         });
     }
