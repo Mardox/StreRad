@@ -171,7 +171,17 @@ public class MainActivity extends FragmentActivity {
 
             @Override
             public void onPageSelected(int i) {
-                new HeavyTask().execute();
+                switch (viewPager.getCurrentItem()){
+                    case 0:
+                        AlterVisibility(View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                        break;
+                    case 1:
+                        AlterVisibility(View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
+                        break;
+                    case 2:
+                        AlterVisibility(View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+                        break;
+                }
             }
 
             @Override
@@ -389,30 +399,6 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    public class HeavyTask extends AsyncTask<Void,Void,Void>{
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void voids) {
-            super.onPostExecute(voids);
-            // do something with data here-display it or send to mainactivity
-            switch (viewPager.getCurrentItem()){
-                case 0:
-                    AlterVisibility(View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
-                    break;
-                case 1:
-                    AlterVisibility(View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
-                    break;
-                case 2:
-                    AlterVisibility(View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
-                    break;
-            }
-        }
-    }
 }
 
 
