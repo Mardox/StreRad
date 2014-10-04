@@ -12,11 +12,7 @@
         android:layout_height="fill_parent"
         android:orientation="vertical">
 
-        <include
-            layout="@layout/main_front"
-            android:layout_width="fill_parent"
-            android:layout_height="0px"
-            android:layout_weight="64" />
+
 
         <include
             layout="@layout/viewpager_layout"

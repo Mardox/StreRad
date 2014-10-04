@@ -1,6 +1,8 @@
 package com.example.mark.streamradio;
 
+import android.app.ActionBar;
 import android.app.Dialog;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -105,57 +107,17 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
-//        MediaRecorder mediaRecorder = new MediaRecorder();
-//        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
-//        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.AAC_ADTS);
-//        mediaRecorder.setOutputFile("Klayan.aac");
+
 
         dataManager = new DataManager(this, "user_radio");
         fontRegular = Typeface.createFromAsset(getAssets(), "fonts/font.otf");
         //radioTitle = (TextView) findViewById(R.id.radioTitle);
         //radioTitle.setTypeface(fontRegular);
 
-        bottom0 = (ImageView) findViewById(R.id.now_playing_icon_bottom);
-        bottom1 = (ImageView) findViewById(R.id.radio_icon_bottom);
-        bottom2 = (ImageView) findViewById(R.id.news_icon_bottom);
-        bottom3 = (ImageView) findViewById(R.id.more_icon_bottom);
 
-        now_playing_icon = (ImageView) findViewById(R.id.now_playing_icon);
-        AlterVisibility(View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
-        now_playing_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewPager.setCurrentItem(0);
-                AlterVisibility(View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
-            }
-        });
-        radio_icon = (ImageView) findViewById(R.id.radio_icon);
-        radio_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewPager.setCurrentItem(1);
-                AlterVisibility(View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
-            }
-        });
-        news_icon = (ImageView) findViewById(R.id.news_icon);
-        news_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewPager.setCurrentItem(2);
-                AlterVisibility(View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
-            }
-        });
-        more_icon = (ImageView) findViewById(R.id.more_icon);
-        more_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //viewPager.setCurrentItem(3);
-                AlterVisibility(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
-            }
-        });
 
 
 
@@ -171,17 +133,18 @@ public class MainActivity extends FragmentActivity {
 
             @Override
             public void onPageSelected(int i) {
-                switch (viewPager.getCurrentItem()){
-                    case 0:
-                        AlterVisibility(View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
-                        break;
-                    case 1:
-                        AlterVisibility(View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
-                        break;
-                    case 2:
-                        AlterVisibility(View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
-                        break;
-                }
+//                switch (viewPager.getCurrentItem()){
+//                    case 0:
+//                        AlterVisibility(View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+//                        break;
+//                    case 1:
+//                        AlterVisibility(View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
+//                        break;
+//                    case 2:
+//                        AlterVisibility(View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+//                        break;
+//                }
+                getActionBar().setSelectedNavigationItem(i);
             }
 
             @Override
@@ -189,6 +152,51 @@ public class MainActivity extends FragmentActivity {
 
             }
         });
+
+
+        final ActionBar actionBar = getActionBar();
+
+        // Specify that tabs should be displayed in the action bar.
+        if (actionBar != null) {
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        }
+
+        // Create a tab listener that is called when the user changes tabs.
+        ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+                // show the given tab
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+                // hide the given tab
+            }
+
+            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+                // probably ignore this event
+            }
+        };
+
+        // Add 3 tabs, specifying the tab's text and TabListener
+        if (actionBar != null) {
+            actionBar.addTab(
+                    actionBar.newTab()
+                            .setText("Now Playing")
+                            .setTabListener(tabListener));
+            actionBar.addTab(
+                    actionBar.newTab()
+                            .setText("Radio")
+                            .setTabListener(tabListener));
+            actionBar.addTab(
+                    actionBar.newTab()
+                            .setText("News")
+                            .setTabListener(tabListener));
+            actionBar.addTab(
+                    actionBar.newTab()
+                            .setText("More")
+                            .setTabListener(tabListener));
+        }
+
 
 //        screenChaneButton = (ImageView) findViewById(R.id.nextScreen);
 //        screenChaneButton.setOnClickListener(new View.OnClickListener() {

@@ -18,6 +18,7 @@
     <string name="action_refresh">Refresh</string>
 
     <color name="background_color">#00CCFF</color>
+    <color name="action_bar_color">#ff8800</color>
 
     <string name="title_activity_recordings">My Recordings</string>
     <string name="action_settings">Settings</string>
