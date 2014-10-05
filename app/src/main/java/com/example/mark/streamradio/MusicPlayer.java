@@ -3,12 +3,16 @@ package com.example.mark.streamradio;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Created by User on 2014.07.03..
@@ -56,6 +60,34 @@ public class MusicPlayer {
 
         if (iCount %3 == 0){
             MainActivity.loadInterstitial();
+        }
+        new MetaData().execute();
+    }
+
+    public class MetaData extends AsyncTask<Void, Void, Void>{
+        String metaD;
+        String metaD1;
+        String metaD2;
+        @Override
+        protected Void doInBackground(Void... voids) {
+            MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+            if (Build.VERSION.SDK_INT >= 14)
+                mmr.setDataSource(radioListElement.getUrl(), new HashMap<String, String>());
+            else
+                mmr.setDataSource(radioListElement.getUrl());
+
+            metaD = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+
+            metaD1 = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUMARTIST);
+
+            metaD2 = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void voids){
+            Toast.makeText(context, "Details = " + metaD + "," + metaD1 +  "," + metaD2, Toast.LENGTH_LONG).show();
         }
     }
 
