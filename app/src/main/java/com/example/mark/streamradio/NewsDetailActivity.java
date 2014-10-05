@@ -1,6 +1,8 @@
 package com.example.mark.streamradio;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
@@ -16,17 +18,54 @@ import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+
 
 public class NewsDetailActivity extends ActionBarActivity {
 
     WebView newsBrowser;
     NewsItemsData newsItemsData;
     ProgressBar progressBar;
+    InterstitialAd interstitial;
+    int newsCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        SharedPreferences interstitialPref = getSharedPreferences("interstitialNewsCount", Context.MODE_PRIVATE);
+        if (interstitialPref.contains("newsCount"))
+        {
+            newsCount = interstitialPref.getInt("newsCount", 0);
+        } else {
+            newsCount = 0;
+        }
+        newsCount++;
+        SharedPreferences.Editor editor = interstitialPref.edit();
+        editor.putInt("iCount", newsCount);
+        editor.commit();
+
+        // Create the interstitial.
+        interstitial = new InterstitialAd(this);
+        interstitial.setAdUnitId(getResources().getString(R.string.interstitial_news_id));
+
+        // Create ad request.
+        AdRequest interstitialRequest = new AdRequest.Builder().build();
+
+        // Begin loading your interstitial.
+        interstitial.loadAd(interstitialRequest);
+        interstitial.setAdListener(new AdListener(){
+            public void onAdLoaded(){
+                if (newsCount %3 == 0){
+                    loadInterstitial();
+                }
+            }
+        });
 
         // create new ProgressBar and style it
         progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
@@ -80,6 +119,19 @@ public class NewsDetailActivity extends ActionBarActivity {
                 return false;
             }
         });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        loadInterstitial();
+        super.onBackPressed();
+    }
+
+    private void loadInterstitial() {
+        if (interstitial != null && interstitial.isLoaded()) {
+            interstitial.show();
+        }
     }
 
     private class MyBrowser extends WebChromeClient {
@@ -128,6 +180,9 @@ public class NewsDetailActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_refresh) {
             newsBrowser.reload();
+        }
+        if (id == android.R.id.home){
+            this.finish();
         }
 
         return super.onOptionsItemSelected(item);

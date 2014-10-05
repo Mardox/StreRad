@@ -30,8 +30,6 @@ public class MusicPlayer {
     }
 
     public void play(RadioListElement rle) {
-
-
         radioListElement=rle;
         musicPlayerTask.cancel(true);
         musicPlayerTask = new MusicPlayerTask();
@@ -42,6 +40,23 @@ public class MusicPlayer {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString("currentRadioUrl", radioListElement.getUrl());
         editor.commit();
+
+        int iCount;
+        SharedPreferences interstitialPref = context.getSharedPreferences("interstitialCount", Context.MODE_PRIVATE);
+        if (interstitialPref.contains("iCount"))
+        {
+            iCount = interstitialPref.getInt("iCount", 0);
+        } else {
+            iCount = 0;
+        }
+        iCount++;
+        SharedPreferences.Editor editor2 = interstitialPref.edit();
+        editor2.putInt("iCount", iCount);
+        editor2.commit();
+
+        if (iCount %3 == 0){
+            MainActivity.loadInterstitial();
+        }
     }
 
     public void startListeners(MediaPlayer mediaPlayer){

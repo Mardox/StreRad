@@ -41,6 +41,7 @@ import com.example.mark.streamradio.TabPagesAndAdapter.MainScreen;
 import com.example.mark.streamradio.TabPagesAndAdapter.TabPagerAdapter;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -63,6 +64,7 @@ public class MainActivity extends FragmentActivity {
     private int volumeStore;
     private ImageView previousBtn, nextBtn, recordBtn;
     private AdView adViewBanner;
+    private static InterstitialAd interstitial;
     private Typeface fontRegular;
 
     public static void radioListRefresh() {
@@ -125,7 +127,15 @@ public class MainActivity extends FragmentActivity {
         adViewBanner.loadAd(adRequest);
         adViewBanner.setVisibility(View.INVISIBLE);
 
+        // Create the interstitial.
+        interstitial = new InterstitialAd(this);
+        interstitial.setAdUnitId(getResources().getString(R.string.interstitial_id));
 
+        // Create ad request.
+        AdRequest interstitialRequest = new AdRequest.Builder().build();
+
+        // Begin loading your interstitial.
+        interstitial.loadAd(interstitialRequest);
 
         TabPagerAdapter tabPageAdapter = new TabPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.pager);
@@ -264,7 +274,7 @@ public class MainActivity extends FragmentActivity {
             defaultVolumeBarPosition(audioManager, volumeLayout, volumeButton);
         else if (keyCode == KeyEvent.KEYCODE_VOLUME_UP)
             defaultVolumeBarPosition(audioManager, volumeLayout, volumeButton);
-        return super.onKeyDown(keyCode, event);
+        return super.onKeyUp(keyCode, event);
     }
 
     @Override
@@ -273,10 +283,17 @@ public class MainActivity extends FragmentActivity {
             defaultVolumeBarPosition(audioManager, volumeLayout, volumeButton);
         else if (keyCode == KeyEvent.KEYCODE_VOLUME_UP)
             defaultVolumeBarPosition(audioManager, volumeLayout, volumeButton);
-        else if (keyCode == KeyEvent.KEYCODE_BACK) {
-            onBackPressed();
-        }
+
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // your code.
+        if (interstitial != null && interstitial.isLoaded()) {
+            interstitial.show();
+        }
+        super.onBackPressed();
     }
 
     @Override
@@ -385,6 +402,12 @@ public class MainActivity extends FragmentActivity {
                 }
             });
             dialog.show();
+        }
+    }
+
+    public static void loadInterstitial() {
+        if (interstitial != null && interstitial.isLoaded()) {
+            interstitial.show();
         }
     }
 
