@@ -39,6 +39,7 @@ import android.widget.TextView;
 
 import com.example.mark.streamradio.TabPagesAndAdapter.MainScreen;
 import com.example.mark.streamradio.TabPagesAndAdapter.TabPagerAdapter;
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import java.io.BufferedReader;
@@ -61,7 +62,7 @@ public class MainActivity extends FragmentActivity {
     private LinearLayout volumeLayout, volumeButton;
     private int volumeStore;
     private ImageView previousBtn, nextBtn, recordBtn;
-    private AdView adView;
+    private AdView adViewBanner;
     private Typeface fontRegular;
 
     public static void radioListRefresh() {
@@ -119,7 +120,10 @@ public class MainActivity extends FragmentActivity {
         //radioTitle = (TextView) findViewById(R.id.radioTitle);
         //radioTitle.setTypeface(fontRegular);
 
-
+        adViewBanner = (AdView) this.findViewById(R.id.adView_banner);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adViewBanner.loadAd(adRequest);
+        adViewBanner.setVisibility(View.INVISIBLE);
 
 
 
@@ -135,17 +139,6 @@ public class MainActivity extends FragmentActivity {
 
             @Override
             public void onPageSelected(int i) {
-//                switch (viewPager.getCurrentItem()){
-//                    case 0:
-//                        AlterVisibility(View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
-//                        break;
-//                    case 1:
-//                        AlterVisibility(View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
-//                        break;
-//                    case 2:
-//                        AlterVisibility(View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
-//                        break;
-//                }
                 getActionBar().setSelectedNavigationItem(i);
             }
 
@@ -168,6 +161,22 @@ public class MainActivity extends FragmentActivity {
             public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
                 // show the given tab
                 viewPager.setCurrentItem(tab.getPosition());
+
+                switch (tab.getPosition()){
+                    case 0:
+                        adViewBanner.setVisibility(View.GONE);
+                        break;
+                    case 1:
+                        adViewBanner.setVisibility(View.VISIBLE);
+                        break;
+                    case 2:
+                        adViewBanner.setVisibility(View.VISIBLE);
+                        break;
+                    default:
+                        adViewBanner.setVisibility(View.VISIBLE);
+                        break;
+
+                }
             }
 
             public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
@@ -194,16 +203,6 @@ public class MainActivity extends FragmentActivity {
                             .setText("News")
                             .setTabListener(tabListener));
         }
-
-
-//        screenChaneButton = (ImageView) findViewById(R.id.nextScreen);
-//        screenChaneButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (viewPager.getCurrentItem() == 0) viewPager.setCurrentItem(1, true);
-//                else viewPager.setCurrentItem(0, true);
-//            }
-//        });
 
         speaker = (ImageView) findViewById(R.id.speaker);
         speaker.setOnTouchListener(new View.OnTouchListener() {
@@ -234,10 +233,7 @@ public class MainActivity extends FragmentActivity {
         recordBtn = (ImageView) findViewById(R.id.record_btn);
 
 
-//        adView = (AdView) this.findViewById(R.id.adView);
-//        AdRequest adRequest = new AdRequest.Builder().build();
-//        adView.loadAd(adRequest);
-//        adView.setVisibility(View.INVISIBLE);
+
     }
 
     @Override

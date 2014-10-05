@@ -29,15 +29,11 @@
     </LinearLayout>
 
     <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
+        android:id="@+id/adView_banner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         ads:adUnitId="@string/admob_id"
         ads:adSize="BANNER"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/textView"
-        android:layout_alignBottom="@+id/textView"
         android:layout_gravity="bottom"
         android:layout_marginBottom="10dp" />
 
