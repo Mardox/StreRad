@@ -11,13 +11,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.revmob.RevMob;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class RecordingsActivity extends Activity {
-
+    private RevMob revmob;
     ListView recordingsList;
     private File file;
     @Override
@@ -60,7 +63,6 @@ public class RecordingsActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long arg3) {
                 // TODO Auto-generated method stub
-
                 MediaPlayer mediaPlayer = new MediaPlayer();
                 String path = recordPathList.get(position);
                 try {
@@ -74,6 +76,19 @@ public class RecordingsActivity extends Activity {
                     });
                 } catch (IOException e) {
                     e.printStackTrace();
+                }
+
+                switch (RandomNumber()){
+                    case 0:
+                        revmob = RevMob.start(RecordingsActivity.this);
+                        revmob.showFullscreen(RecordingsActivity.this);
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    default:
+                        break;
                 }
 
 //                String product = ((TextView) view).getText().toString();
@@ -95,5 +110,10 @@ public class RecordingsActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.recordings, menu);
         return true;
+    }
+
+    private int RandomNumber(){
+        Random r = new Random();
+        return r.nextInt(2);
     }
 }
