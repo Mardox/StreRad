@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.chartboost.sdk.CBLocation;
+import com.chartboost.sdk.Chartboost;
 import com.revmob.RevMob;
 
 import java.io.File;
@@ -27,6 +29,12 @@ public class RecordingsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recordings);
+
+        //ChartBoost
+        String appId = "";
+        String appSignature = "";
+        Chartboost.startWithAppId(this, appId, appSignature);
+        Chartboost.onCreate(this);
 
         recordingsList = (ListView) findViewById(R.id.recording_list);
 
@@ -84,10 +92,14 @@ public class RecordingsActivity extends Activity {
                         revmob.showFullscreen(RecordingsActivity.this);
                         break;
                     case 1:
+                        Chartboost.cacheInterstitial(CBLocation.LOCATION_DEFAULT);
+                        Chartboost.showInterstitial(CBLocation.LOCATION_DEFAULT);
                         break;
                     case 2:
+                        //Do Nothing
                         break;
                     default:
+                        //Do Nothing
                         break;
                 }
 
@@ -115,5 +127,44 @@ public class RecordingsActivity extends Activity {
     private int RandomNumber(){
         Random r = new Random();
         return r.nextInt(2);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Chartboost.onStart(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Chartboost.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Chartboost.onPause(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Chartboost.onStop(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Chartboost.onDestroy(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // If an interstitial is on screen, close it.
+        if (Chartboost.onBackPressed())
+            return;
+        else
+            super.onBackPressed();
     }
 }
